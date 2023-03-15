@@ -12,6 +12,7 @@ def load_image(nombre) -> np.ndarray:
 
 def get_face_detector_and_predictor():
     detector = dlib.get_frontal_face_detector()
+    # model from https://github.com/tzutalin/dlib-android/raw/master/data/shape_predictor_68_face_landmarks.dat
     predictor = dlib.shape_predictor("../model/shape_predictor_68_face_landmarks.dat")
     return detector, predictor
 
