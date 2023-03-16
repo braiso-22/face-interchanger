@@ -2,7 +2,7 @@ import cv2 as cv
 import dlib
 import numpy as np
 
-from image_utils import Img
+from image_utils import Img, Camera
 
 
 def load_image(nombre) -> np.ndarray:
@@ -148,7 +148,6 @@ def change_face(image1, image2):
     image2 = image2.copy()
     image2_gray = Img.escala_grises(image2)
 
-
     height, width, channels = image2.shape
     new_face = np.zeros((height, width, channels), np.uint8)
 
@@ -220,9 +219,12 @@ def change_face(image1, image2):
     seamlessclone = cv.seamlessClone(result, image2, new_head_mask, center_face2, cv.NORMAL_CLONE)
     swaped = cv.cvtColor(seamlessclone, cv.COLOR_BGR2RGB)
 
-    Img.mostrar(swaped)
+    return swaped
 
-    pass
+
+def operacion_frame(frame, params):
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+    return change_face(params["face1"], frame), None
 
 
 def main():
@@ -232,6 +234,13 @@ def main():
     mostrar_cara_pintada(cara2)
     mostrar_cara_pintada(cara1)
     change_face(cara2, cara1)
+
+    Camera.video_capture(
+        operacion=operacion_frame,
+        operacion_params={
+            "face1": cara1
+        }
+    )
 
 
 if __name__ == '__main__':
