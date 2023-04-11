@@ -233,7 +233,8 @@ def main():
 
     mostrar_cara_pintada(cara2)
     mostrar_cara_pintada(cara1)
-    change_face(cara2, cara1)
+    changed = change_face(cara2, cara1)
+    Img.mostrar(changed)
 
     Camera.video_capture(
         operacion=operacion_frame,
